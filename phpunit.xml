@@ -1,0 +1,12 @@
+<phpunit testdox="true" colors="true">
+    <php>
+        <const name="PICKLIST_DATA" value="tests/data"/>
+    </php>
+    <testsuites>
+        <testsuite name="Picklist tests">
+            <file>tests/PicklistTest.php</file>
+            <file>tests/PicklistCollectionTest.php</file>
+            <file>tests/PicklistsTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
