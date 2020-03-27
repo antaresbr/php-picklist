@@ -34,21 +34,40 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
     public function __construct(String $id, array $data = null)
     {
         $this->id = $id;
-        
+
         if (empty($this->id)) {
             throw PicklistException::forNotDefinedId();
         }
-        
+
         if (is_null($data) and !empty($id)) {
-            $picklistFile = rtrim(PICKLIST_DATA, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
-            if (is_file($picklistFile)) {
-                $data = require "{$picklistFile}";
-            } else {
-                throw PicklistException::forNotFoundId($id);
-            }
+            $data = require $this->getPicklistFile($id);
         }
 
         $this->setData($data);
+    }
+
+    /**
+     * Get picklist file name
+     *
+     * @param string $id
+     * @return string|PicklistException
+     */
+    protected function getPicklistFile($id)
+    {
+        $picklistFolder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
+        if (empty($picklistFolder) and function_exists('env')) {
+            $picklistFolder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
+        }
+        if (empty($picklistFolder) and function_exists('config')) {
+            $picklistFolder = is_string(config('PICKLIST_DATA')) ? config('PICKLIST_DATA') : null;
+        }
+
+        $picklistFile = rtrim($picklistFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
+        if (is_file($picklistFile)) {
+            return $picklistFile;
+        } else {
+            throw PicklistException::forNotFoundId($id);
+        }
     }
 
     /**
