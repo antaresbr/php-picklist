@@ -59,7 +59,7 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
             $picklistFolder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
         }
         if (empty($picklistFolder) and function_exists('config')) {
-            $picklistFolder = is_string(config('PICKLIST_DATA')) ? config('PICKLIST_DATA') : null;
+            $picklistFolder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
         }
 
         $picklistFile = rtrim($picklistFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
