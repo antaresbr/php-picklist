@@ -16,6 +16,7 @@
     "license": "MIT",
     "require": {
         "php": "^7",
+	"antaresbr/arrayhandler": "*",
         "antaresbr/collection": "*"
     },
     "autoload": {

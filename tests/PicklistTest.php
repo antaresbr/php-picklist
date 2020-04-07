@@ -51,4 +51,16 @@ final class PicklistTest extends TestCase
         $this->assertEquals($pl->getLabel('b'), 'Audi');
         $this->assertEquals($pl->getKey('bmw'), 'c');
     }
+
+    public function testCitiesPicklist()
+    {
+        $pl = new Picklist('other/cities.usa.georgia');
+
+        $this->assertInstanceOf(Picklist::class, $pl);
+        $this->assertEquals($pl->getId(), 'other/cities.usa.georgia');
+        $this->assertIsArray($pl->getData());
+        $this->assertEquals(count($pl), 6);
+        $this->assertEquals($pl->getLabel(1), 'Atlanta');
+        $this->assertEquals($pl->getKey('Cairo'), 4);
+    }
 }

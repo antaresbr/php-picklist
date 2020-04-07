@@ -2,6 +2,7 @@
 
 namespace Antares\Picklist;
 
+use Antares\Support\ArrayHandler\Arr;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
@@ -11,11 +12,25 @@ use JsonSerializable;
 class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traversable
 {
     /**
-     * The Id of this object
+     * The full Id of this object
      *
-     * @var array
+     * @var string
      */
     protected $id;
+
+    /**
+     * The file name portion of the id
+     *
+     * @var string
+     */
+    protected $idFile;
+
+    /**
+     * The index portion of the id
+     *
+     * @var string
+     */
+    protected $idIndex;
 
     /**
      * The array with the items
@@ -35,15 +50,40 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
     {
         $this->id = $id;
 
-        if (empty($this->id)) {
+        if (empty($id)) {
             throw PicklistException::forNotDefinedId();
         }
 
         if (is_null($data) and !empty($id)) {
             $data = require $this->getPicklistFile($id);
+
+            if ($id != $this->idFile) {
+                if (Arr::has($data, $this->idIndex)) {
+                    $data = Arr::get($data, $this->idIndex);
+                } else {
+                    throw PicklistException::forNotFoundId($id);
+                }
+            }
         }
 
         $this->setData($data);
+    }
+
+    /**
+     * Get picklist folder
+     *
+     * @return string
+     */
+    protected function getfolder()
+    {
+        $folder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
+        if (empty($picklistFolder) and function_exists('env')) {
+            $picklistFolder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
+        }
+        if (empty($picklistFolder) and function_exists('config')) {
+            $picklistFolder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
+        }
+        return $picklistFolder;
     }
 
     /**
@@ -54,20 +94,32 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      */
     protected function getPicklistFile($id)
     {
-        $picklistFolder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
-        if (empty($picklistFolder) and function_exists('env')) {
-            $picklistFolder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
+        $this->idFile = '';
+        $this->idIndex = '';
+
+        $folder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
+        if (empty($folder) and function_exists('env')) {
+            $folder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
         }
-        if (empty($picklistFolder) and function_exists('config')) {
-            $picklistFolder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
+        if (empty($folder) and function_exists('config')) {
+            $folder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
         }
 
-        $picklistFile = rtrim($picklistFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
-        if (is_file($picklistFile)) {
-            return $picklistFile;
-        } else {
-            throw PicklistException::forNotFoundId($id);
+        $idFile = explode('.', $id);
+        $idIndex = [];
+
+        while (count($idFile) > 0) {
+            $id = implode('.', $idFile);
+            $file = rtrim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
+            if (is_file($file)) {
+                $this->idFile = $id;
+                $this->idIndex = implode('.', array_reverse($idIndex));
+                return $file;
+            }
+            array_push($idIndex, array_pop($idFile));
         }
+
+        throw PicklistException::forNotFoundId($id);
     }
 
     /**
