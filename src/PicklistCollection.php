@@ -2,7 +2,7 @@
 
 namespace Antares\Picklist;
 
-use Antares\Support\Collection\AssociativeCollection;
+use Antares\Support\AssociativeCollection;
 
 class PicklistCollection extends AssociativeCollection
 {

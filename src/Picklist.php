@@ -2,12 +2,12 @@
 
 namespace Antares\Picklist;
 
-use Antares\Support\ArrayHandler\Arr;
+use Antares\Support\Arr;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use Traversable;
 use JsonSerializable;
+use Traversable;
 
 class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traversable
 {
