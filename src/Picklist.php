@@ -74,16 +74,16 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      *
      * @return string
      */
-    protected function getfolder()
+    protected function getDataFolder()
     {
         $folder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
-        if (empty($picklistFolder) and function_exists('env')) {
-            $picklistFolder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
+        if (empty($folder) and function_exists('env')) {
+            $folder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
         }
-        if (empty($picklistFolder) and function_exists('config')) {
-            $picklistFolder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
+        if (empty($folder) and function_exists('config')) {
+            $folder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
         }
-        return $picklistFolder;
+        return $folder;
     }
 
     /**
@@ -97,20 +97,15 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
         $this->idFile = '';
         $this->idIndex = '';
 
-        $folder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
-        if (empty($folder) and function_exists('env')) {
-            $folder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
-        }
-        if (empty($folder) and function_exists('config')) {
-            $folder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
-        }
+        $folder = $this->getDataFolder();
 
         $idFile = explode('.', $id);
         $idIndex = [];
 
         while (count($idFile) > 0) {
             $id = implode('.', $idFile);
-            $file = rtrim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "{$id}.php";
+            $file = rtrim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $id) . '.php';
+
             if (is_file($file)) {
                 $this->idFile = $id;
                 $this->idIndex = implode('.', array_reverse($idIndex));
