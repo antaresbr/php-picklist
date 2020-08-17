@@ -6,7 +6,7 @@ if (!function_exists('ai_picklist_infos')) {
     /**
      * Get package infos.
      *
-     * @return array
+     * @return object
      */
     function ai_picklist_infos()
     {
