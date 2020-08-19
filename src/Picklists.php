@@ -7,7 +7,7 @@ class Picklists
     /**
      * PicklistCollection glocal instance
      *
-     * @var [type]
+     * @var PickListCollection
      */
     private static $collection;
 
