@@ -90,7 +90,7 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      * Get picklist file name
      *
      * @param string $id
-     * @return string|PicklistException
+     * @return string
      */
     protected function getPicklistFile($id)
     {
@@ -103,11 +103,11 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
         $idIndex = [];
 
         while (count($idFile) > 0) {
-            $id = implode('.', $idFile);
-            $file = rtrim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $id) . '.php';
+            $tempId = implode('.', $idFile);
+            $file = rtrim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $tempId) . '.php';
 
             if (is_file($file)) {
-                $this->idFile = $id;
+                $this->idFile = $tempId;
                 $this->idIndex = implode('.', array_reverse($idIndex));
                 return $file;
             }
