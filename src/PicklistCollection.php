@@ -25,11 +25,11 @@ class PicklistCollection extends AssociativeCollection
      */
     public function add($id, $item)
     {
-        if (empty($id) and !empty($item) and ($item instanceof PickList)) {
+        if (empty($id) and !empty($item) and ($item instanceof Picklist)) {
             $id = $item->getId();
         }
         if (empty($item)) {
-            $item = new PickList($id);
+            $item = new Picklist($id);
         }
         return parent::add($id, $item);
     }

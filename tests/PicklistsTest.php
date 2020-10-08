@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use Antares\Picklist\Picklist;
-use Antares\PickList\PicklistCollection;
+use Antares\Picklist\PicklistCollection;
 use PHPUnit\Framework\TestCase;
 
 final class PicklistsTest extends TestCase

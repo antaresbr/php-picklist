@@ -7,19 +7,19 @@ class Picklists
     /**
      * PicklistCollection glocal instance
      *
-     * @var PickListCollection
+     * @var PicklistCollection
      */
     private static $collection;
 
     /**
      * Get glocal picklist collection instance
      *
-     * @return PickListCollection
+     * @return PicklistCollection
      */
     public static function getCollection()
     {
         if (is_null(static::$collection)) {
-            static::$collection = new PickListCollection();
+            static::$collection = new PicklistCollection();
         }
 
         return static::$collection;
