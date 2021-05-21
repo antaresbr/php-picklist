@@ -20,7 +20,7 @@ class PicklistCollection extends AssociativeCollection
      * Add a picklist
      *
      * @param  mixed $id
-     * @param  Picklist $item
+     * @param  \Antares\Picklist\Picklist $item
      * @return boolean
      */
     public function add($id, $item)
@@ -38,7 +38,7 @@ class PicklistCollection extends AssociativeCollection
      * Get a picklist
      *
      * @param  mixed $id
-     * @return Picklist
+     * @return \Antares\Picklist\Picklist
      */
     public function get($id)
     {

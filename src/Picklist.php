@@ -262,6 +262,23 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
     }
 
     /**
+     * Get an item based on key
+     *
+     * @param  mixed  $key
+     * @return mixed
+     */
+    public function getItem($key)
+    {
+        foreach ($this->data as $item) {
+            if ($item['key'] == $key) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Get item key from value of given field. Default search field is 'label'.
      *
      * @param  mixed  $search

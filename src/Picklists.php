@@ -7,14 +7,14 @@ class Picklists
     /**
      * PicklistCollection glocal instance
      *
-     * @var PicklistCollection
+     * @var \Antares\Picklist\PicklistCollection
      */
     private static $collection;
 
     /**
      * Get glocal picklist collection instance
      *
-     * @return PicklistCollection
+     * @return \Antares\Picklist\PicklistCollection
      */
     public static function getCollection()
     {
@@ -29,7 +29,7 @@ class Picklists
      * Add a picklist
      *
      * @param  mixed $id
-     * @param  Picklist $item
+     * @param  \Antares\Picklist\Picklist $item
      * @return boolean
      */
     public static function add($id, $item)
@@ -41,7 +41,7 @@ class Picklists
      * Get a picklist
      *
      * @param  mixed $id
-     * @return Picklist
+     * @return \Antares\Picklist\Picklist
      */
     public static function get($id)
     {
