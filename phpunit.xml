@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit testdox="true" colors="true">
+<phpunit 
+    testdox="true" colors="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    bootstrap = "vendor/autoload.php"
+    >
     <php>
         <const name="PICKLIST_DATA" value="tests/data"/>
     </php>
     <testsuites>
         <testsuite name="Picklist tests">
-            <file>tests/SupportTest.php</file>
-            <file>tests/PicklistTest.php</file>
-            <file>tests/PicklistCollectionTest.php</file>
-            <file>tests/PicklistsTest.php</file>
+            <directory suffix=".php">tests</directory>
+            <exclude>tests/data</exclude>
+            <exclude>tests/.toignore</exclude>
         </testsuite>
     </testsuites>
 </phpunit>

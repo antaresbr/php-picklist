@@ -2,7 +2,7 @@
 
 namespace Antares\Picklist;
 
-use Antares\Support\Arr;
+use Antares\Foundation\Arr;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
@@ -76,12 +76,12 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      */
     protected function getDataFolder()
     {
-        $folder = defined('PICKLIST_DATA') ? PICKLIST_DATA : null;
-        if (empty($folder) and function_exists('env')) {
-            $folder = is_string(env('PICKLIST_DATA')) ? env('PICKLIST_DATA') : null;
+        $folder = defined('PICKLIST_DATA') ? constant('PICKLIST_DATA') : null;
+        if (empty($folder)) {
+            $folder = is_string(ai_foundation_env('PICKLIST_DATA')) ? ai_foundation_env('PICKLIST_DATA') : null;
         }
         if (empty($folder) and function_exists('config')) {
-            $folder = is_string(config('picklist.PICKLIST_DATA')) ? config('picklist.PICKLIST_DATA') : null;
+            $folder = is_string(ai_foundation_config('picklist.PICKLIST_DATA')) ? ai_foundation_config('picklist.PICKLIST_DATA') : null;
         }
         return $folder;
     }
@@ -177,9 +177,9 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
     /**
      * Get items count
      *
-     * @return integer
+     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
@@ -189,7 +189,7 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      *
      * @return ArrayItarator
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->data);
     }
@@ -209,7 +209,7 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }

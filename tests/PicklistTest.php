@@ -12,8 +12,8 @@ final class PicklistTest extends TestCase
             throw PicklistException::forNotDefinedDataDir();
         }
 
-        $this->assertIsString(PICKLIST_DATA);
-        $this->assertDirectoryExists(PICKLIST_DATA);
+        $this->assertIsString(constant('PICKLIST_DATA'));
+        $this->assertDirectoryExists(constant('PICKLIST_DATA'));
     }
 
     public function testFuitsPicklist()
