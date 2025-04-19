@@ -46,7 +46,7 @@ class Picklist implements Countable, IteratorAggregate, JsonSerializable, Traver
      * @param  array  $data
      * @return void
      */
-    public function __construct(String $id, array $data = null)
+    public function __construct(String $id, ?array $data = null)
     {
         $this->id = $id;
 

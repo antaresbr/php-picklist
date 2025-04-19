@@ -3,6 +3,7 @@
     testdox="true" colors="true"
     displayDetailsOnTestsThatTriggerDeprecations="true"
     displayDetailsOnTestsThatTriggerWarnings="true"
+    displayDetailsOnPhpunitDeprecations="true"
     bootstrap = "vendor/autoload.php"
     >
     <php>
